@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자리 배치 도우미 - 우리반 스마트 교실</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', 'Jua', sans-serif; }
+        .jua-font { font-family: 'Jua', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- Header with Back Button -->
+    <header class="w-full py-6 px-6 bg-white/80 backdrop-blur-md shadow-sm border-b border-purple-100 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl transition flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </a>
+                <div>
+                    <h1 class="text-xl jua-font text-purple-900">자리 배치 도우미</h1>
+                    <p class="text-xs text-slate-500 font-medium">랜덤 자리 섞기</p>
+                </div>
+            </div>
+            <button onclick="shuffleSeats()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl text-sm shadow-md transition">
+                자리 섞기!
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Seat Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 flex flex-col items-center justify-center w-full">
+        <div class="w-full bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-purple-100 flex flex-col items-center">
+            <div class="w-full py-3 bg-slate-800 text-white rounded-2xl text-center jua-font tracking-widest mb-8 shadow-md">
+                [ 칠 판 ]
+            </div>
+
+            <!-- Seat Grid Display -->
+            <div id="seat-grid" class="grid grid-cols-4 sm:grid-cols-6 gap-3 w-full mb-6">
+                <!-- Seats will be rendered via JS -->
+            </div>
+
+            <p class="text-xs text-slate-400">버튼을 누를 때마다 22명의 자리가 무작위로 섞입니다.</p>
+        </div>
+    </main>
+
+    <footer class="w-full py-4 text-center text-xs text-slate-400 border-t border-slate-100 bg-white/50">
+        <p>자리 배치 도우미 페이지 • Multi-Page App</p>
+    </footer>
+
+    <script>
+        const students = [
+            "김민준", "이지은", "박도윤", "서서윤", "정시우",
+            "아이유", "한지민", "송중기", "김태리", "남주혁",
+            "손흥민", "김연아", "유재석", "제니", "정국",
+            "카리나", "윈터", "장원영", "안유진", "차은우",
+            "페이커", "박보검"
+        ];
+
+        function renderSeats(shuffledList) {
+            const grid = document.getElementById('seat-grid');
+            grid.innerHTML = '';
+            shuffledList.forEach((name, index) => {
+                const div = document.createElement('div');
+                div.className = "bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 rounded-2xl p-4 text-center shadow-sm flex flex-col items-center justify-center transform transition hover:scale-105";
+                div.innerHTML = `
+                    <span class="text-[10px] text-purple-400 font-bold mb-1">${index + 1}번</span>
+                    <span class="jua-font text-slate-700 text-sm sm:text-base">${name}</span>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function shuffleSeats() {
+            const shuffled = [...students].sort(() => Math.random() - 0.5);
+            renderSeats(shuffled);
+        }
+
+        window.onload = function() {
+            renderSeats(students);
+        };
+    </script>
+</body>
+</html>
